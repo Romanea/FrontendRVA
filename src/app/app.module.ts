@@ -20,6 +20,7 @@ import { MatButtonModule, MatIconModule, MatSidenavModule, MatListModule,
  import {SmerService} from 'src/app/services/smer.service';
  import {ProjekatService} from 'src/app/services/projekat.service';
 import {FormsModule} from '@angular/forms';
+import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-dialog.component';
 
 
 
@@ -41,6 +42,7 @@ const Routes = [
     SmerComponent,
     GrupaComponent,
     ProjekatComponent,
+    GrupaDialogComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -51,7 +53,7 @@ const Routes = [
     RouterModule.forRoot(Routes),
     HttpClientModule
   ],
-  entryComponents: [],
+  entryComponents: [GrupaDialogComponent],
   providers: [GrupaService, SmerService, ProjekatService],
   bootstrap: [AppComponent]
 })
