@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Projekat } from 'src/app/models/projekat';
 import { HttpClient } from '@angular/common/http';
 import { ProjekatService } from 'src/app/services/projekat.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog,MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 import {ProjekatDialogComponent} from '../dialogs/projekat-dialog/projekat-dialog.component'
 
 
@@ -14,7 +14,11 @@ import {ProjekatDialogComponent} from '../dialogs/projekat-dialog/projekat-dialo
 })
 export class ProjekatComponent implements OnInit {
   displayedColumns = ['id', 'naziv', 'oznaka', 'opis', 'actions'];
-  dataSource : Observable<Projekat[]>;
+  dataSource : MatTableDataSource<Projekat>;
+
+  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public projekatService: ProjekatService,public dialog : MatDialog) { }
 
@@ -23,7 +27,20 @@ export class ProjekatComponent implements OnInit {
   }
 
   public loadData(){
-    this.dataSource = this.projekatService.getAllProjekat();
+    this.projekatService.getAllProjekat().subscribe(data =>{
+      this.dataSource = new MatTableDataSource(data);
+
+      //case ignore
+      this.dataSource.sortingDataAccessor = (data, property) => {
+        switch (property) {
+          case 'id': return data[property];
+          default: return data[property].toLocaleLowerCase();
+        }
+      };
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   public openDialog(flag: number, id:number, naziv:string, oznaka: string, opis:string){
@@ -32,5 +49,11 @@ export class ProjekatComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
        this.loadData();
     })
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

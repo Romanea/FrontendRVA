@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { StudentService } from '../../services/student.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog,MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Student } from '../../models/student';
 import { Observable } from 'rxjs';
 import { Grupa } from '../../models/grupa';
@@ -14,9 +14,11 @@ import {StudentDialogComponent}  from '../dialogs/student-dialog/student-dialog.
 })
 export class StudentComponent implements OnInit {
   displayedColumns = ['id', 'ime', 'prezime', 'broj_indeksa', 'grupa', 'smer', 'projekat', 'actions'];
-  dataSource: Observable<Student[]>;
+  dataSource: MatTableDataSource<Student>;
   
   @Input() selektovanaGrupa: Grupa;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public studentService: StudentService, public dialog: MatDialog) { }
 
@@ -30,7 +32,30 @@ export class StudentComponent implements OnInit {
   }
 
   public loadData() {
-    this.dataSource = this.studentService.getStudentiGrupe(this.selektovanaGrupa.id);
+    this.studentService.getStudentiGrupe(this.selektovanaGrupa.id).subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+
+      //pretraga po nazivu ugnježdenog objekta
+      this.dataSource.filterPredicate = (data, filter: string) => {
+        const accumulator = (currentTerm, key) => {
+          return key === 'grupa' ? currentTerm + data.grupa.oznaka : currentTerm + data[key];
+        };
+        const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        const transformedFilter = filter.trim().toLowerCase();
+        return dataStr.indexOf(transformedFilter) !== -1;
+      };
+
+       //sortiranje po nazivu ugnježdenog objekta
+       this.dataSource.sortingDataAccessor = (data, property) => {
+        switch(property) {
+          case 'grupa': return data.grupa.oznaka.toLocaleLowerCase();
+          default: return data[property];
+        }
+      };
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
     
   }
 
@@ -45,5 +70,11 @@ export class StudentComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
        this.loadData();
     });
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

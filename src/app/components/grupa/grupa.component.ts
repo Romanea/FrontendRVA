@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Grupa } from 'src/app/models/grupa';
 import { HttpClient } from '@angular/common/http';
 import { GrupaService } from 'src/app/services/grupa.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 import {GrupaDialogComponent} from '../dialogs/grupa-dialog/grupa-dialog.component';
 import { Smer } from '../../models/smer';
 
@@ -14,9 +14,12 @@ import { Smer } from '../../models/smer';
 })
 export class GrupaComponent implements OnInit {
   displayedColumns = ['id', 'oznaka', 'smer', 'actions'];
-  dataSource: Observable<Grupa[]>;
+  dataSource: MatTableDataSource<Grupa>;
   selektovanaGrupa : Grupa;
 
+  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(public grupaService: GrupaService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -28,7 +31,31 @@ export class GrupaComponent implements OnInit {
   }
 
   public loadData(){
-    this.dataSource = this.grupaService.getAllGrupa();
+    this.grupaService.getAllGrupa().subscribe(data =>{
+      this.dataSource = new MatTableDataSource(data);
+
+             
+      //pretraga po nazivu ugnježdenog objekta
+      this.dataSource.filterPredicate = (data, filter: string) => {
+        const accumulator = (currentTerm, key) => {
+          return key === 'smer' ? currentTerm + data.smer.naziv : currentTerm + data[key];
+        };
+        const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        const transformedFilter = filter.trim().toLowerCase();
+        return dataStr.indexOf(transformedFilter) !== -1;
+      };
+
+       //sortiranje po nazivu ugnježdenog objekta
+       this.dataSource.sortingDataAccessor = (data, property) => {
+        switch(property) {
+          case 'smer': return data.smer.naziv.toLocaleLowerCase();
+          default: return data[property];
+        }
+      };
+      
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   public openDialog(flag: number, id:number, oznaka:string, smer: Smer){
@@ -41,5 +68,12 @@ export class GrupaComponent implements OnInit {
 
   public selectRow(row) {
     this.selektovanaGrupa = row;
+  }
+
+  
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Smer } from 'src/app/models/smer';
 import { HttpClient } from '@angular/common/http';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 
 import {SmerService}from 'src/app/services/smer.service';
 import {SmerDialogComponent} from '../dialogs/smer-dialog/smer-dialog.component'
@@ -14,7 +14,10 @@ import {SmerDialogComponent} from '../dialogs/smer-dialog/smer-dialog.component'
 })
 export class SmerComponent implements OnInit {
   displayedColumns = ['id', 'naziv', 'oznaka', 'actions'];
-  dataSource: Observable<Smer[]>;
+  dataSource: MatTableDataSource<Smer>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public smerService: SmerService, public dialog : MatDialog) { }
 
@@ -23,7 +26,20 @@ export class SmerComponent implements OnInit {
   }
 
   public loadData(){
-    this.dataSource = this.smerService.getAllSmer();
+   this.smerService.getAllSmer().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+
+   //case ignore
+   this.dataSource.sortingDataAccessor = (data, property) => {
+     switch (property) {
+       case 'id': return data[property];
+       default: return data[property].toLocaleLowerCase();
+     }
+   };
+
+   this.dataSource.paginator = this.paginator;
+   this.dataSource.sort = this.sort;
+ });;
   }
 
   public openDialog(flag: number, id:number, naziv:string, oznaka: string){

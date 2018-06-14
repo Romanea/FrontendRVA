@@ -2,6 +2,9 @@
   <span class="title-center">Studenti</span>
  </mat-toolbar>
  <div class="container mat-elevation-z8">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretraga">
+      </mat-form-field>
   <mat-table #table [dataSource]="dataSource" class="mat-cell">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
@@ -62,4 +65,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
- </div>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+</div>

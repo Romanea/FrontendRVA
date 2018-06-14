@@ -11,7 +11,7 @@ import { ProjekatComponent } from './components/projekat/projekat.component';
 import { MatButtonModule, MatIconModule, MatSidenavModule, MatListModule,
           MatGridListModule, MatExpansionModule, MatSortModule, MatTableModule, 
           MatToolbarModule, MatSelectModule, MatOptionModule, MatSnackBarModule,
-           MatDialogModule, MatInputModule
+           MatDialogModule, MatInputModule, MatPaginatorModule
  } from '@angular/material';
  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  import { RouterModule, Routes } from '@angular/router';
@@ -56,7 +56,7 @@ const Routes = [
     BrowserModule, BrowserAnimationsModule,
     MatButtonModule, MatIconModule, MatSidenavModule, MatListModule,
     MatGridListModule, MatExpansionModule, MatSortModule, MatTableModule,
-    MatToolbarModule, MatSelectModule, MatOptionModule, MatSnackBarModule, MatDialogModule, 
+    MatToolbarModule, MatSelectModule, MatOptionModule, MatSnackBarModule, MatDialogModule,  MatPaginatorModule,
     MatInputModule, FormsModule,
     RouterModule.forRoot(Routes),
     HttpClientModule
