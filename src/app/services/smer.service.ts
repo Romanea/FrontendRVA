@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class SmerService {
-  private readonly API_URL = 'http://localhost:8083/smerovi';
+  private readonly API_URL = 'http://localhost:8083/smerovi/';
   dataChange: BehaviorSubject<Smer[]> = new BehaviorSubject<Smer[]>([]);
 
   constructor(private httpClient: HttpClient) { }

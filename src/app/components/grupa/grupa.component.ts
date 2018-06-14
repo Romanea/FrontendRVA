@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Grupa } from 'src/app/models/grupa';
 import { HttpClient } from '@angular/common/http';
 import { GrupaService } from 'src/app/services/grupa.service';
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {GrupaDialogComponent} from '../dialogs/grupa-dialog/grupa-dialog.component';
 import { Smer } from '../../models/smer';
 
@@ -15,10 +15,15 @@ import { Smer } from '../../models/smer';
 export class GrupaComponent implements OnInit {
   displayedColumns = ['id', 'oznaka', 'smer', 'actions'];
   dataSource: Observable<Grupa[]>;
+  selektovanaGrupa : Grupa;
 
   constructor(public grupaService: GrupaService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  ngOnChanges(){
     this.loadData();
   }
 
@@ -30,9 +35,11 @@ export class GrupaComponent implements OnInit {
     const dialogRef= this.dialog.open(GrupaDialogComponent, {data: {id:id, oznaka : oznaka, smer:smer}});
     dialogRef.componentInstance.flag = flag;
     dialogRef.afterClosed().subscribe(result => {
-      if(result == 1) this.loadData();
+       this.loadData();
     })
+  }
 
-    
+  public selectRow(row) {
+    this.selektovanaGrupa = row;
   }
 }

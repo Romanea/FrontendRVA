@@ -5,7 +5,7 @@ import {BehaviorSubject} from "rxjs"
 import { Observable } from "rxjs";
 
 @Injectable()
-export class ProjekatService {  private readonly API_URL = 'http://localhost:8083/projekti';
+export class ProjekatService {  private readonly API_URL = 'http://localhost:8083/projekti/';
   dataChange: BehaviorSubject<Projekat[]> = new BehaviorSubject<Projekat[]>([]);
 
 

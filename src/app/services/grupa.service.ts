@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class GrupaService {
-  private readonly API_URL = 'http://localhost:8083/grupe';
+  private readonly API_URL = 'http://localhost:8083/grupe/';
   dataChange: BehaviorSubject<Grupa[]> = new BehaviorSubject<Grupa[]>([]);
 
 

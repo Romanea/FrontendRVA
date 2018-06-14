@@ -3,7 +3,6 @@ import {MatSnackBar, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {GrupaService} from 'src/app/services/grupa.service';
 import {Grupa} from 'src/app/models/grupa';
 import {Smer} from 'src/app/models/smer';
-
 import {SmerService} from 'src/app/services/smer.service';
 
 @Component({
@@ -47,11 +46,11 @@ export class GrupaDialogComponent implements OnInit {
 
   public delete():void{
     this.grupaService.deleteGrupa(this.data.id);
-    this.snackBar.open("Grupa uspesno obrisana");
+    this.snackBar.open("Grupa uspesno obrisana","OK", {duration:2500});
   }
 
   public cancel():void{
     this.dialogRef.close();
-    this.snackBar.open("Odustali ste od života.", "OK", {duration:2500});
+    this.snackBar.open("Odustali ste ", "OK", {duration:2500});
   }
 }

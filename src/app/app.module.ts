@@ -21,6 +21,10 @@ import { MatButtonModule, MatIconModule, MatSidenavModule, MatListModule,
  import {ProjekatService} from 'src/app/services/projekat.service';
 import {FormsModule} from '@angular/forms';
 import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-dialog.component';
+import { SmerDialogComponent } from './components/dialogs/smer-dialog/smer-dialog.component';
+import { ProjekatDialogComponent } from './components/dialogs/projekat-dialog/projekat-dialog.component';
+import { StudentComponent } from './components/student/student.component';
+import { StudentDialogComponent } from './components/dialogs/student-dialog/student-dialog.component';
 
 
 
@@ -43,6 +47,10 @@ const Routes = [
     GrupaComponent,
     ProjekatComponent,
     GrupaDialogComponent,
+    SmerDialogComponent,
+    ProjekatDialogComponent,
+    StudentComponent,
+    StudentDialogComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -53,7 +61,7 @@ const Routes = [
     RouterModule.forRoot(Routes),
     HttpClientModule
   ],
-  entryComponents: [GrupaDialogComponent],
+  entryComponents: [GrupaDialogComponent, SmerDialogComponent, ProjekatDialogComponent, StudentDialogComponent],
   providers: [GrupaService, SmerService, ProjekatService],
   bootstrap: [AppComponent]
 })
