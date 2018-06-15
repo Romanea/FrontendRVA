@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Smer } from 'src/app/models/smer';
+import { Smer } from '../../models/smer';
 import { HttpClient } from '@angular/common/http';
 import {MatDialog, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 
-import {SmerService}from 'src/app/services/smer.service';
+import {SmerService}from '../../services/smer.service';
 import {SmerDialogComponent} from '../dialogs/smer-dialog/smer-dialog.component'
 
 @Component({
@@ -49,5 +49,9 @@ export class SmerComponent implements OnInit {
        this.loadData();
     })
   }
-    
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

@@ -14,11 +14,11 @@ import { MatButtonModule, MatIconModule, MatSidenavModule, MatListModule,
            MatDialogModule, MatInputModule, MatPaginatorModule
  } from '@angular/material';
  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
- import { RouterModule, Routes } from '@angular/router';
+ import { RouterModule} from '@angular/router';
  import { HttpClientModule } from '@angular/common/http';
- import { GrupaService } from 'src/app/services/grupa.service';
- import {SmerService} from 'src/app/services/smer.service';
- import {ProjekatService} from 'src/app/services/projekat.service';
+ import { GrupaService } from './services/grupa.service';
+ import {SmerService} from './services/smer.service';
+ import {ProjekatService} from './services/projekat.service';
 import {FormsModule} from '@angular/forms';
 import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-dialog.component';
 import { SmerDialogComponent } from './components/dialogs/smer-dialog/smer-dialog.component';
