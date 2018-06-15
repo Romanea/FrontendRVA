@@ -21,15 +21,15 @@
  
     <div class="form">
       <mat-form-field>
-        <input matInput placeholder="Broj indeksa" [(ngModel)]="data.broj_indeksa" name="broj_indeksa" [disabled]="flag == 3">
+        <input matInput placeholder="Broj indeksa" [(ngModel)]="data.brojIndeksa" name="brojIndeksa" [disabled]="flag == 3">
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.grupa" placeholder="Grupa" name="grupa" [disabled]="flag == 3">
+        <mat-select [(ngModel)]="data.grupa.oznaka" placeholder="Grupa" name="grupa" [disabled]="flag == 3">
           <mat-option *ngFor="let grupa of grupe" [value]="grupa">
-            {{ grupa.naziv }}
+            {{ grupa.oznaka }}, {{grupa.smer.naziv}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -37,7 +37,7 @@
 
     <div class="form">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.projekat" placeholder="Projekat" name="projekat" [compareWith]="compareTo" [disabled]="flag == 3">
+        <mat-select [(ngModel)]="data.projekat.naziv" placeholder="Projekat" name="projekat"  [disabled]="flag == 3">
           <mat-option *ngFor="let projekat of projekti" [value]="artikl">
             {{ projekat.naziv }}
           </mat-option>

@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import {MatSnackBar, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {Grupa} from 'src/app/models/grupa';
-import {Student} from 'src/app/models/student';
-import {Projekat} from 'src/app/models/projekat';
+import {Grupa} from '../../../models/grupa';
+import {Student} from '../../../models/student';
+import {Projekat} from '../../../models/projekat';
 
-import {StudentService} from 'src/app/services/student.service';
-import {GrupaService} from 'src/app/services/grupa.service';
-import {ProjekatService} from 'src/app/services/projekat.service';
+import {StudentService} from '../../../services/student.service';
+import {GrupaService} from '../../../services/grupa.service';
+import {ProjekatService} from '../../../services/projekat.service';
 
 
 
@@ -30,6 +30,11 @@ export class StudentDialogComponent implements OnInit {
               public studentService : StudentService) { }
 
   ngOnInit() {
+    this.grupaService.getAllGrupa().subscribe(grupe => this.grupe=grupe);
+    this.projekatService.getAllProjekat().subscribe(projekti => this.projekti=projekti);
+    this.studentService.getAllStudent().subscribe(studenti => this.studenti=studenti);
+
+
   }
 
   public add() : void {

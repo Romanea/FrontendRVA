@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Grupa } from 'src/app/models/grupa';
+import { Grupa } from '../../models/grupa';
 import { HttpClient } from '@angular/common/http';
-import { GrupaService } from 'src/app/services/grupa.service';
+import { GrupaService } from '../../services/grupa.service';
 import {MatDialog, MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
 import {GrupaDialogComponent} from '../dialogs/grupa-dialog/grupa-dialog.component';
 import { Smer } from '../../models/smer';
@@ -27,7 +27,7 @@ export class GrupaComponent implements OnInit {
   }
 
   ngOnChanges(){
-    this.loadData();
+   // this.loadData();
   }
 
   public loadData(){

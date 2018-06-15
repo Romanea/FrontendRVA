@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class StudentService {
   private readonly API_URL = 'http://localhost:8083/studenti/';
+  private readonly API_URL_BYID = 'http://localhost:8083/studentiGrupe/';
   dataChange: BehaviorSubject<Student[]> = new BehaviorSubject<Student[]>([]);
   studentiGrupe: Student[];
   studenti: Student[];
@@ -23,17 +24,14 @@ export class StudentService {
     return this.dataChange.asObservable();
   }
 
-  public getStudentiGrupe(id_grupe : number) :  Observable<Student[]> {
-    this.getAllStudent().subscribe(studenti => this.studenti = studenti ) ;
-      for( var student in this.studenti) {
-        if( JSON.stringify(student)["grupa"]["id"] == id_grupe)
-          this.studentiGrupe.push(JSON.parse(student));
-          console.log( student);
-      }
-      this.dataChange.next(this.studentiGrupe);
-    
+  public getStudentiGrupe(id_grupe): Observable<Student[]> {
+    this.httpClient.get<Student[]>(this.API_URL_BYID + id_grupe).subscribe(data => {
+      this.dataChange.next(data);
+    },
+      (error: HttpErrorResponse) => {
+        console.log(error.name + ' ' + error.message);
+      });
     return this.dataChange.asObservable();
-
   }
 
  /* public getStudentiGrupe(id_grupe : number) :  Observable<Student[]> {

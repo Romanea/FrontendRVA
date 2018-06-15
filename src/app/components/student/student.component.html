@@ -21,9 +21,9 @@
       <mat-cell *matCellDef="let row"> {{row.prezime}}</mat-cell>
     </ng-container>
  
-    <ng-container matColumnDef="broj_indeksa">
+    <ng-container matColumnDef="brojIndeksa">
       <mat-header-cell *matHeaderCellDef>Broj indeksa</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.broj_indeksa}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.brojIndeksa}}</mat-cell>
     </ng-container>
  
     <ng-container matColumnDef="grupa">
@@ -38,7 +38,7 @@
  
     <ng-container matColumnDef="projekat">
       <mat-header-cell *matHeaderCellDef>Projekat</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.projekat}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.projekat.naziv}}</mat-cell>
     </ng-container>
  
     <!-- actions -->
@@ -51,12 +51,12 @@
  
       <mat-cell *matCellDef="let row; let i=index;">
         <button mat-icon-button color="primary" (click)="openDialog(2, row.id, row.ime,
-         row.prezime, row.broj_indeksa, row.grupa, row.projekat)">
+         row.prezime, row.brojIndeksa, row.grupa, row.projekat)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
  
         <button mat-icon-button color="primary" (click)="openDialog(3, row.id, row.ime,
-        row.prezime, row.broj_indeksa, row.grupa, row.projekat)">
+        row.prezime, row.brojIndeksa, row.grupa, row.projekat)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

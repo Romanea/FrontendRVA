@@ -13,7 +13,7 @@ import {StudentDialogComponent}  from '../dialogs/student-dialog/student-dialog.
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
-  displayedColumns = ['id', 'ime', 'prezime', 'broj_indeksa', 'grupa', 'smer', 'projekat', 'actions'];
+  displayedColumns = ['id', 'ime', 'prezime', 'brojIndeksa', 'grupa', 'smer', 'projekat', 'actions'];
   dataSource: MatTableDataSource<Student>;
   
   @Input() selektovanaGrupa: Grupa;
@@ -61,7 +61,7 @@ export class StudentComponent implements OnInit {
 
  public openDialog(flag: number, id: number, ime: string, prezime: string, broj_indeksa : number, grupa : Grupa, projekat : Projekat) {
     const dialogRef = this.dialog.open(StudentDialogComponent, {
-      data: { id: id, ime: ime, prezime: prezime, broj_indeksa : broj_indeksa, grupa : grupa, projekat : projekat
+      data: { id: id, ime: ime, prezime: prezime, brojIndeksa : broj_indeksa, grupa : grupa, projekat : projekat
       }
     });
     dialogRef.componentInstance.flag = flag;

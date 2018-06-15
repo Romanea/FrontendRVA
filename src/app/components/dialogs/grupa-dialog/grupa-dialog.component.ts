@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatSnackBar, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {GrupaService} from 'src/app/services/grupa.service';
-import {Grupa} from 'src/app/models/grupa';
-import {Smer} from 'src/app/models/smer';
-import {SmerService} from 'src/app/services/smer.service';
+import {GrupaService} from '../../../services/grupa.service';
+import {Grupa} from '../../../models/grupa';
+import {Smer} from '../../../models/smer';
+import {SmerService} from '../../../services/smer.service';
 
 @Component({
   selector: 'app-grupa-dialog',
